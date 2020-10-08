@@ -48,15 +48,21 @@
           <th>Att/G</th>
           <th>Att</th>
           <th>
-            <a href="#" class="text-primary" @click="sort_by_yards">Yds</a>
+            <a href="#" class="text-primary" @click="change_sort('yards')"
+              >Yds</a
+            >
           </th>
           <th>Avg</th>
           <th>Yds/G</th>
           <th>
-            <a href="#" class="text-primary" @click="sort_by_touchdowns">TD</a>
+            <a href="#" class="text-primary" @click="change_sort('touchdowns')"
+              >TD</a
+            >
           </th>
           <th>
-            <a href="#" class="text-primary" @click="sort_by_longest">Lng</a>
+            <a href="#" class="text-primary" @click="change_sort('longest')"
+              >Lng</a
+            >
           </th>
           <th>1st</th>
           <th>1st%</th>
@@ -85,6 +91,14 @@
         </tr>
       </tbody>
     </table>
+
+    <button
+      type="button"
+      class="btn btn-outline-success btn-block"
+      @click="download_csv"
+    >
+      Download as CSV
+    </button>
   </div>
 </template>
 
@@ -114,7 +128,7 @@ export default {
 
   computed: {
     rushes_filtered_sorted: function () {
-      var filtered = this.rushes.filter((rush) =>
+      let filtered = this.rushes.filter((rush) =>
         rush.player.toLowerCase().includes(this.filter_name)
       );
 
@@ -161,31 +175,34 @@ export default {
         });
     },
 
-    sort_by_yards: function () {
-      if (this.sort_by == "yards") {
+    // If already sorting by the same column, flip the order
+    // Otherwise, sort by the new column in descending order
+    change_sort: function (column) {
+      if (this.sort_by == column) {
         this.sort_asc = !this.sort_asc;
       } else {
-        this.sort_by = "yards";
+        this.sort_by = column;
         this.sort_asc = false;
       }
     },
 
-    sort_by_touchdowns: function () {
-      if (this.sort_by == "touchdowns") {
-        this.sort_asc = !this.sort_asc;
-      } else {
-        this.sort_by = "touchdowns";
-        this.sort_asc = false;
-      }
-    },
+    download_csv: function () {
+      const rows = this.rushes_filtered_sorted.reduce(
+        (acc, r) =>
+          acc +
+          `${r.player},${r.team},${r.position},${r.attempts},` +
+          `${r.attempts_per_game},${r.yards},${r.yards_per_attempt},` +
+          `${r.yards_per_game},${r.touchdowns},${r.longest},${r.first_downs},` +
+          `${r.first_down_percentage},${r.twenty_plus_yards},` +
+          `${r.forty_plus_yards},${r.fumbles}\n`,
+        "Player,Team,Pos,Att,Att/G,Yds,Avg,Yds/G,TD,Lng,1st,1st%,20+,40+,FUM\n"
+      );
+      const output = "data:text/csv;charset=utf-8," + encodeURIComponent(rows);
 
-    sort_by_longest: function () {
-      if (this.sort_by == "longest") {
-        this.sort_asc = !this.sort_asc;
-      } else {
-        this.sort_by = "longest";
-        this.sort_asc = false;
-      }
+      const link = document.createElement("a");
+      link.setAttribute("href", output);
+      link.setAttribute("download", "rushing.csv");
+      link.click();
     },
   },
 };

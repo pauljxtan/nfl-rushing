@@ -58,21 +58,25 @@ defmodule Backend.Rush do
   Converts a row in the expected csv input into a corresponding changeset.
   """
   def from_csv(row) do
-    # Note that the value of any integer might include commas as thousands separators
     map =
       row
       |> Enum.map(fn {k, v} ->
-        {@csv_to_db[k],
-         if(is_binary(v) and String.match?(v, ~r/^\d{1,3}(,\d{3})*$/),
-           do: String.replace(v, ",", ""),
-           else: v
-         )}
+        {
+          @csv_to_db[k],
+          # Remove comma delimiters in large integers
+          if(is_binary(v) and String.match?(v, ~r/^\d{1,3}(,\d{3})*$/),
+            do: String.replace(v, ",", ""),
+            else: v
+          )
+        }
       end)
       |> Enum.into(%{})
 
+    # Check if the longest rush resulted in a touchdown
     longest_was_touchdown = is_binary(map[:longest]) and String.contains?(map[:longest], "T")
     map = map |> Map.put(:longest_was_touchdown, longest_was_touchdown)
 
+    # Now remove the "T" if present
     map =
       if longest_was_touchdown,
         do: map |> Map.update!(:longest, fn v -> v |> String.replace("T", "") end),

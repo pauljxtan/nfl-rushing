@@ -88,6 +88,12 @@ At a high-level, the application consists of three containers:
   and rendering the page server-side. However, given that this project is
   intended to evaluate full-stack competency, I have taken a few liberties :)
 
+- On a similar note, I tried to implement most of the frontend JS logic without
+  relying too much on existing libraries for filtering, pagination, CSV export,
+  and so on. (The major exception is `axios` for HTTP requests.) From digging
+  around a bit, it seems that [bootstrap-table](https://bootstrap-table.com/)
+  probably provides most of our required functionality out of the box.
+
 - I realized at some point that calling each row a "rush" is a bit of a
   misnomer, since each one obviously comprises multiple rushes. Going back and
   renaming everything seemed like a bit of a hassle for the purposes of this
