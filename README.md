@@ -67,6 +67,10 @@ A Makefile is included to abstract away the lower-level commands:
 
 To view all available commands, run `make help`.
 
+You should hopefully see something like this:
+
+![Sample](./sample.png)
+
 #### Project structure and rationale
 
 At a high-level, the application consists of three containers:
