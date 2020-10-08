@@ -54,4 +54,37 @@ We will evaluate you on your ability to solve the problem defined in the require
 If you have any questions regarding requirements, do not hesitate to email your contact at theScore for clarification.
 
 ### Installation and running this solution
-... TODO
+
+This application requires [Docker](https://www.docker.com/) and [Docker
+Compose](https://docs.docker.com/compose/), which are available for most
+mainstream OSes.
+
+A Makefile is included to abstract away the lower-level commands:
+
+1. Run `make run` to build and start all containers.
+2. Run `make db-setup` to migrate and seed the database with the provided data.
+3. Navigate to http://localhost:8000.
+
+To view all available commands, run `make help`.
+
+#### Project structure and rationale
+
+At a high-level, the application consists of three containers:
+
+1. A PostgreSQL database (`nfl-rushing-db`) that stores the rushing statistics;
+2. A backend Phoenix server (`nfl-rushing-backend`) that serves the rushing
+  stats through a REST API;
+3. A frontend Vue application (`nfl-rushing-frontend`) that renders the table as
+  described above.
+
+#### Other notes
+
+- I'm aware that this is somewhat over-engineering things, as the requirements
+  could've been fulfilled with Phoenix alone by reading the csv file directly
+  and rendering the page server-side. However, given that this project is
+  intended to evaluate full-stack competency, I have taken a few liberties :)
+
+- I realized at some point that calling each row a "rush" is a bit of a
+  misnomer, since each one obviously comprises multiple rushes. Going back and
+  renaming everything seemed like a bit of a hassle for the purposes of this
+  challenge, so I decided not to, but just wanted to mention it anyway.
