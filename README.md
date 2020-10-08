@@ -91,4 +91,5 @@ At a high-level, the application consists of three containers:
 - I realized at some point that calling each row a "rush" is a bit of a
   misnomer, since each one obviously comprises multiple rushes. Going back and
   renaming everything seemed like a bit of a hassle for the purposes of this
-  challenge, so I decided not to, but just wanted to mention it anyway.
+  challenge, so I decided not to, but just wanted to mention it anyway. (There
+  are only two hard things in CS, etc.)

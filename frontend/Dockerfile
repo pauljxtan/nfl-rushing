@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1.0.0-experimental
-
 # Base image for dev
 FROM node:14.13.0-alpine3.12 AS dev
 EXPOSE 8080
