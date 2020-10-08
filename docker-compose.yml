@@ -45,6 +45,8 @@ services:
       - 8000:8080
       # Prod server
       - 8001:80
+    environment:
+      VUE_APP_API_URL: http://nfl-rushing-backend:4000
     init: true
     stdin_open: true
     tty: true
