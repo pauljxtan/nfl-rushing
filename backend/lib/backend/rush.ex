@@ -23,7 +23,7 @@ defmodule Backend.Rush do
     "FUM" => :fumbles
   }
 
-  @derive {Jason.Encoder, only: Map.values(@csv_to_db)}
+  @derive {Jason.Encoder, only: Map.values(@csv_to_db) ++ [:longest_was_touchdown]}
   schema "rushes" do
     field :player, :string
     field :team, :string

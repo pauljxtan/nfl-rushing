@@ -167,6 +167,7 @@ export default {
         .get("/api/rushes")
         .then((resp) => {
           this.rushes = JSON.parse(resp.data.rushes);
+          console.log(this.rushes[0]);
         })
         .catch(() => {
           // This should probably display a nicer notification on the page
@@ -187,12 +188,15 @@ export default {
     },
 
     download_csv: function () {
+      // Don't forget to add the "T" to touchdowns if needed
       const rows = this.rushes_filtered_sorted.reduce(
         (acc, r) =>
           acc +
           `${r.player},${r.team},${r.position},${r.attempts},` +
-          `${r.attempts_per_game},${r.yards},${r.yards_per_attempt},` +
-          `${r.yards_per_game},${r.touchdowns},${r.longest},${r.first_downs},` +
+          `${r.attempts_per_game},${r.yards},` +
+          `${r.yards_per_attempt},${r.yards_per_game},` +
+          `${r.touchdowns}${r.longest_was_touchdown ? "T" : ""},` +
+          `${r.longest},${r.first_downs},` +
           `${r.first_down_percentage},${r.twenty_plus_yards},` +
           `${r.forty_plus_yards},${r.fumbles}\n`,
         "Player,Team,Pos,Att,Att/G,Yds,Avg,Yds/G,TD,Lng,1st,1st%,20+,40+,FUM\n"
