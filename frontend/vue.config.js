@@ -2,7 +2,7 @@ module.exports = {
   devServer: {
     proxy: {
       "^/api": {
-        target: "http://nfl-rushing-backend:4000",
+        target: process.env.VUE_APP_API_URL,
         ws: true,
         changeOrigin: true,
       },
