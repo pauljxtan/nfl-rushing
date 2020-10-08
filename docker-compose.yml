@@ -50,9 +50,12 @@ services:
     init: true
     stdin_open: true
     tty: true
+    # Don't mount the following volumes if running the prod target
     volumes:
       - ./frontend:/app
       - nfl-rushing-frontend__node_modules:/app/node_modules
+    depends_on:
+      - nfl-rushing-backend
 
 volumes:
   nfl-rushing-backend__build:
