@@ -13,6 +13,8 @@ services:
       DB_HOSTNAME: nfl-rushing-db
       DB_PASSWORD: "${POSTGRES_PASSWORD}"
       DB_USERNAME: "${POSTGRES_USER}"
+      DATABASE_URL: "ecto://${POSTGRES_USER}:${POSTGRES_PASSWORD}@nfl-rushing-db/${POSTGRES_DB}"
+      SECRET_KEY_BASE: tntzNbgn0WrwREA8oYkl0Medqp3Cbxzdv/DtVL8R3GQprb+6N1Jtq4OKt3NA5vG1
     init: true
     stdin_open: true
     tty: true
